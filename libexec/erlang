@@ -840,7 +840,7 @@ __get_node_command() {
       bin/${APP} ping 2>/dev/null >/dev/null
     }
     __edeliver_synchronous_start() {
-      bin/${APP} start | \$output_filter_command \$output_filter_command_options
+      RELX_REPLACE_OS_VARS=true bin/${APP} start | \$output_filter_command \$output_filter_command_options
       for i in {1..10}; do
         __edeliver_node_running && break || :
         sleep 1
@@ -868,10 +868,10 @@ __get_node_command() {
       if [[ \"$RELEASE_CMD\" = \"mix\" ]]; then
         __edeliver_synchronous_start
       else
-        ${_node_env}bin/${APP} start ${_config_arg} | \$output_filter_command \$output_filter_command_options
+      RELX_REPLACE_OS_VARS=true  ${_node_env}bin/${APP} start ${_config_arg} | \$output_filter_command \$output_filter_command_options
       fi
     else # no restart command
-      ${_node_env}bin/${APP} ${_node_command} ${_config_arg} | \$output_filter_command \$output_filter_command_options
+      RELX_REPLACE_OS_VARS=true ${_node_env}bin/${APP} ${_node_command} ${_config_arg} | \$output_filter_command \$output_filter_command_options
     fi
   "
 }
